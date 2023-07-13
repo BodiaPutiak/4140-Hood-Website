@@ -1,0 +1,362 @@
+body {
+    font-family: Roboto, Arial;
+    background-repeat: no-repeat;
+    background-position: center 70px;
+    background-size: 80%;
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+}
+
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.left-section {
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+    align-items: center;
+}
+
+.logo {
+    width: 50px;
+    margin-right: 10px;
+    border-radius: 25px;
+}
+
+.logo-title {
+    font-weight: 800;
+}
+
+a,
+a:hover {
+    all: unset;
+    cursor: pointer;
+}
+
+.middle-section {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    height: 20px;
+    align-items: center;
+    margin-right: 35px;
+    max-width: 500px;
+}
+
+.search-box {
+    flex: 1;
+    height: 36px;
+    font-size: 16px;
+    width: 0;
+    background-color: rgb(240, 240, 240);
+    border-radius: 30px;
+    border-style: solid;
+    border-color: rgb(192, 192, 192);
+    margin-left: 10px;
+    transition: all 0.3s;
+}
+
+.search-box:hover {
+    transform: scale(1.03);
+}
+
+.search-button {
+    cursor: pointer;
+    height: 40px;
+    width: 66px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    background-color: rgb(240, 240, 240);
+    border-radius: 30px;
+    border-style: solid;
+    border-color: rgb(192, 192, 192);
+    transition: all 0.3s;
+}
+
+.search-icon {
+    height: 28px;
+}
+
+
+.search-button:hover {
+    transform: scale(1.2);
+}
+
+.right-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;    
+
+}
+
+.instagram-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 30px;
+    border: none;
+    background-color: white;
+    transition: all 0.4s;
+}
+
+.instagram-icon {
+    height: 45px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.4s;
+}
+
+
+.instagram-button:hover {
+    transform: scale(1.3);
+}
+
+
+.join-button {
+    border: none;
+    margin-left: 50px;
+    cursor: pointer;
+    height: 28px;
+    background-color: black;
+    color: white;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    transition: all 0.3s;
+}
+
+.join-button:hover {
+    background-color: white;
+    color: black;
+    transform: scale(1.3);
+}
+
+.body-header {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+    font-weight: 900;
+    font-size: 50px;
+    text-shadow: 0 0 80px white;
+}
+
+
+.promo-grid {
+    margin-left: 100px;
+    margin-top: 100px;
+    margin-right: 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 50px;
+
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-300px);
+    }
+    
+    to {
+        transform: translateX(0);
+    }
+}
+
+.promo-pic {
+    animation: slideInLeft 0.5s ease-in;
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 0 100px rgb(121, 116, 116);
+    border: solid 2px;
+    border-radius: 3px;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(300px);
+    }
+    
+    to {
+        transform: translateX(0);
+    }
+}
+
+.promo-text {
+    animation: slideInRight 0.5s ease-in;
+    font-size: 20px;
+    text-shadow: 0 0 30px rgb(169, 144, 144);
+    line-height: 30px;
+}
+
+@media (max-width: 700px) {
+    .promo-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .promo-text {
+        text-align: center;
+    }
+}
+
+.join-4140-container {
+    display: flex;
+    flex-direction: column;
+    padding: 80px;
+    justify-content: center;
+    align-items: center;
+}
+
+.join-4140-button {
+    font-size: 20px;
+    color: white;
+    background-color: black;
+    border: solid 0.3px;
+    padding: 20px 25px 20px 25px;
+    margin-bottom: 50px;
+    transition: all 0.5s;
+}
+
+.join-4140-button:hover {
+    transform: scale(1.1);
+}
+
+
+.mouse {
+    width: 30px;
+    height: 40px;
+    background-color: white;
+    border-radius: 25px;
+}
+
+.scrol {
+    color:gray
+}
+
+.message-box {
+    background-color: rgb(75, 87, 90);
+    border-radius: 30px;
+
+    margin: 100px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 500px;
+}
+
+
+.messages {
+    overflow-y: scroll;
+    flex: 1;
+    width: 100%;
+} 
+
+.inputs {
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 80%;
+}
+
+#message {
+    flex: 1;
+    height: 36px;
+    font-size: 16px;
+    width: 0;
+    background-color: rgb(240, 240, 240);
+    border-radius: 30px;
+    border-style: solid;
+    border-color: rgb(192, 192, 192);
+    margin-left: 10px;
+    transition: all 0.3s;
+    margin-left: 10px;
+}
+
+#send-btn {
+    border: unset;
+    margin-left: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    background-color: rgb(20, 169, 218);
+    color: rgb(213, 211, 211);
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+  }
+
+.others-msg {
+    margin-right:7em;
+    margin-left: 1em;
+    padding: 0.5em 0.5em 0.5em 1em;
+    border-radius: 5px;
+    border-color: grey;
+    border-width: 0.5px;
+    border-style: solid;
+    background-color: #C2DBFB;
+    /* animation */
+    animation-name: fadeIn;
+    animation-duration: 0.75s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+}
+
+.my-msg {
+    margin-left:7em;
+    margin-right:1em;
+    padding: 0.5em 0.5em 0.5em 1em;
+    border-radius: 5px;
+    border-color: #206ED2;
+    border-width: 1px;
+    border-style: solid;
+    /* animation */
+    animation-name: fadeIn;
+    animation-duration: 0.75s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+}
+
+.other-username {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #206ED2;
+}
+
+.my-username {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #FF6B13;
+}
+
+.timestamp {
+    color: #656d78;
+    font-size:0.7em;
+}
+
+#msg-input {
+    border-color: #ffc107;
+    border-width: 5px;
+}
+
+#get-username {
+    display: none !important;
+}

@@ -1,0 +1,199 @@
+{% extends 'base.html' %} {% block title %}Home{% endblock %}
+<h1 class="body-header">THE 4140 HOOD</h1>
+
+{% block content %}
+<div id="landing">
+    <div class="promo-grid">
+        <div class="promo-pic-container">
+            <img class="promo-pic" src="static/pictures/ekipa_blurr.jpg">
+        </div>
+        <div class="promo-text">
+            <p><strong>99.9% of modern-day men will never experience the power of Brotherhood and Community.</strong></p>
+            <p>They will never experience what it's like to have other ambitious, hard working, diligent, and dutiful men at their side.</p>
+            <p>To experience being surrounded by <strong>success stories</strong>, To be among the <strong>most energetic</strong> and <strong>Men in the world.</strong></p>
+            <p>Inside <strong>4140 HOOD</strong> you will access <strong>knowledge</strong> that will spark your genius and compel you to <strong>work your hardest</strong> to keep up.</p>
+            <p>There is no other place on earth with Men of this caliber.</p>
+        </div>
+    </div>
+    <div class="join-4140-container">
+        
+        <!-- <a href="/chatroom"><button class="join-4140-button" id="join-4140-button">JOIN <strong>THE 4140 CHAT</strong></button></a> -->
+        
+        <!-- <input type="text" class="data-input" id="username" name="username" placeholder="Enter your name" style="margin-bottom: 10px;"> -->
+        <button class="join-4140-button" id="join-4140-button" >JOIN <strong>THE 4140 CHAT</strong></button>
+
+        
+        <img class="mouse" src="static/icons/mouse.svg">
+        <p class="scrol">Scrol for more</p>
+    </div>
+</div>
+
+<div class="message-box" id="message-box" style="display: none;">
+    <h1><strong>4140 Chat</strong></h1>
+    
+    <div class="messages" id="messages">
+
+        <div id="chat-history">
+
+        </div>
+
+        <div id="chat-messages">
+          
+        </div>
+    </div>
+    <div class="inputs">
+        <input type="text" row="3" placeholder="Message" name="message" id="message">
+        <button type="button" name="send" id="send-btn">Send</button>
+    </div>
+    
+</div>
+
+<span id="get-username">{{ current_user.first_name }}</span>
+
+<script type="text/javascript">
+    const socket = io({autoConnect: false});
+
+    function scrollToBottom() {
+        const chatContainer = document.getElementById('messages');
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+    
+
+    document.getElementById("join-4140-button").addEventListener("click", function() {
+
+        socket.connect();
+
+        
+
+        socket.on("connect", function() {
+            socket.emit("user_join");
+        })
+        
+        document.getElementById('message-box').style.display = 'flex';
+        document.getElementById('landing').style.display = 'none';
+
+    })
+
+    socket.on('user_join_message', function(data) {
+        let ul = document.getElementById('chat-messages');
+        let li = document.createElement('div');
+        li.appendChild(document.createTextNode(data['message']));
+        ul.appendChild(li);
+    })
+
+    const username = document.querySelector('#get-username').innerHTML;
+
+    document.getElementById('message').addEventListener('keyup', function(event) {
+        if (event.key == 'Enter') {
+            let message = document.getElementById("message").value;
+            message = message.trim();
+            if (!message || message.length === 0) {
+                
+                return 1
+            }
+            socket.emit('incoming-msg', {'msg': message, 'username': username});
+            document.getElementById('message').value = '';
+        }
+    })
+
+    document.getElementById("send-btn").addEventListener("click", function() {
+        let message = document.getElementById("message").value;
+        socket.emit('incoming-msg', {'msg': message, 'username': username});
+        document.getElementById('message').value = '';
+
+    })
+
+    socket.on('message', function(data) {
+      
+      if (data.msg) {
+        const p = document.createElement('p');
+        const span_timestamp = document.createElement('span');
+        const span_username = document.createElement('span');
+        const br = document.createElement('br');
+
+        if (data.username === username) {
+            p.setAttribute('class', 'my-msg');
+
+            span_username.setAttribute('class', 'my-username');
+            span_username.innerText = data.username;
+
+            span_timestamp.setAttribute("class", "timestamp");
+            span_timestamp.innerText = data.time_stamp;
+
+            p.innerHTML += span_username.outerHTML + br.outerHTML + data.msg + br.outerHTML + span_timestamp.outerHTML;
+
+            document.querySelector('#chat-messages').append(p);
+            scrollToBottom();
+        }
+        else if (typeof data.username !== username) {
+            p.setAttribute('class', 'others-msg');
+
+            span_username.setAttribute("class", "other-username");
+            span_username.innerText = data.username;
+
+            span_timestamp.setAttribute("class", "timestamp");
+            span_timestamp.innerText = data.time_stamp;
+
+            p.innerHTML += span_username.outerHTML + br.outerHTML + data.msg + br.outerHTML + span_timestamp.outerHTML;
+
+
+            document.querySelector('#chat-messages').append(p);   
+            scrollToBottom();
+        }
+      }
+    });
+
+    function displayChatHistory(messages) {
+        const chatHistoryElement = document.getElementById('chat-history');
+        chatHistoryElement.innerHTML = '';
+
+        messages.forEach((message) => {
+
+            if (message.content) {
+                const p = document.createElement('p');
+                const span_timestamp = document.createElement('span');
+                const span_username = document.createElement('span');
+                const br = document.createElement('br');
+                // const messageElement = document.createElement('li');
+                // messageElement.textContent = `${message.username}: ${message.message}`;
+
+            // Add a class to differentiate messages from the current user and other users
+                if (message.sender === username) {
+                    p.setAttribute('class', 'my-msg');
+
+                    span_username.setAttribute('class', 'my-username');
+                    span_username.innerText = message.sender;
+
+                    span_timestamp.setAttribute("class", "timestamp");
+                    span_timestamp.innerText = message.date;
+
+                    p.innerHTML += span_username.outerHTML + br.outerHTML + message.content + br.outerHTML + span_timestamp.outerHTML;
+
+                    document.querySelector('#chat-history').append(p);
+                } 
+                else if (typeof message.sender !== username) {
+                    p.setAttribute('class', 'others-msg');
+
+                    span_username.setAttribute("class", "other-username");
+                    span_username.innerText = message.sender;
+
+                    span_timestamp.setAttribute("class", "timestamp");
+                    span_timestamp.innerText = message.date;
+
+                    p.innerHTML += span_username.outerHTML + br.outerHTML + message.content + br.outerHTML + span_timestamp.outerHTML;
+
+
+                    document.querySelector('#chat-history').append(p);   
+                }
+            }
+        });
+    }
+
+    socket.on('chat_history', (chatHistory) => {
+    // Display the chat history
+        displayChatHistory(chatHistory);
+        scrollToBottom();
+    });
+
+</script>  
+{% endblock %}
